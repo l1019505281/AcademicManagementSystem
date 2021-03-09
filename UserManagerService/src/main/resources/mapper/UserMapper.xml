@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lds.springcloud.dao.IUserDAO">
+
+    <insert id="create" parameterType="com.lds.springcloud.entities.User" useGeneratedKeys="true" keyProperty="userId">
+        insert into t_user(user_id, username, password, role)  values(#{userId}, #{username}, #{password}, #{role});
+    </insert>
+    <delete id="deleteUser" parameterType="com.lds.springcloud.entities.User">
+        delete from t_user where username = #{username};
+    </delete>
+
+    <resultMap id="BaseResultMap" type="com.lds.springcloud.entities.User">
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="password" property="password" jdbcType="VARCHAR"/>
+        <id column="role" property="role" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryById" parameterType="int" resultMap="BaseResultMap">
+        select * from t_user where user_id=#{id};
+    </select>
+
+    <select id="queryByUsernameAndPassword" parameterType="com.lds.springcloud.entities.User" resultMap="BaseResultMap">
+        select * from t_user where username=#{username} AND password=#{password};
+    </select>
+
+</mapper>
