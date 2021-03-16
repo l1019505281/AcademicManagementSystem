@@ -11,6 +11,8 @@
   <modules>
     <module>UserManagerService</module>
     <module>gateway-9527</module>
+    <module>UserManagerService-8002</module>
+      <module>InfoQueryService8010</module>
   </modules>
 
   <!-- 统一管理jar包版本 -->

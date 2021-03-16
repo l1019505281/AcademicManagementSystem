@@ -9,11 +9,23 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allow-credentials: true
+            allowed-origins: "*"
+            allowed-headers: "*"
+            allowed-methods: "*"
+            max-age: 3600
       routes:
         - id: user-manager-service
           uri: lb://user-service
           predicates:
             - Path=/user/get/**
+        - id: user-manager-lb
+          uri: lb://user-service
+          predicates:
+            - Path=/**
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848

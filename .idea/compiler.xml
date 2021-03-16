@@ -9,6 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="UserManagerService" />
         <module name="gateway-9527" />
+        <module name="InfoQueryService8010" />
+        <module name="UserManagerService-8002" />
       </profile>
     </annotationProcessing>
   </component>

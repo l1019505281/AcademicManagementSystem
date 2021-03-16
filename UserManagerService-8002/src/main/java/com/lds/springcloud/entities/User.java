@@ -14,7 +14,6 @@ public class User implements Serializable {
     private Integer userId;
     private String username;
     private String password;
-    private String role;
 
     public Integer getUserId() {
         return userId;
@@ -48,6 +47,6 @@ public class User implements Serializable {
         this.role = role;
     }
 
-
+    private String role;
 
 }

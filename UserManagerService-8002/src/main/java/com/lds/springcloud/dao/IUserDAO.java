@@ -5,8 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Mapper
 @Repository
 public interface IUserDAO {
@@ -36,33 +34,5 @@ public interface IUserDAO {
      * @param user
      * @return
      */
-    public int deleteUser(@Param("id") Integer id);
-
-    /**
-     * 查询所有用户
-     * @return
-     */
-    public List<User> queryAllUser();
-
-    /**
-     *  根据查询条件查询用户
-     * @param pageNum
-     * @param pageSize
-     * @param query
-     * @return
-     */
-    public List<User> queryUserByQuery(@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize,@Param("query") String query);
-
-    /**
-     *
-     * @return
-     */
-    public Integer totalOfUsers();
-
-    /**
-     * 修改用户信息
-     * @param user
-     * @return
-     */
-    public Integer editUser(User user);
+    public int deleteUser(User user);
 }
