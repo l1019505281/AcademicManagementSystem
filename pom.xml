@@ -9,10 +9,10 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>UserManagerService</module>
-    <module>gateway-9527</module>
-    <module>UserManagerService-8002</module>
-      <module>InfoQueryService8010</module>
+    <module>UserManagerService8001</module>
+    <module>gateway9527</module>
+    <module>InfoQueryService8010</module>
+    <module>EnrollService8020</module>
   </modules>
 
   <!-- 统一管理jar包版本 -->

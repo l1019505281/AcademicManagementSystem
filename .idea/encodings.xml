@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/EnrollService8020/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/EnrollService8020/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InfoQueryService8010/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InfoQueryService8010/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/UserManagerService-8002/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/UserManagerService-8002/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/UserManagerService/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/UserManagerService/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/gateway-9527/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/gateway-9527/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserManagerService8001/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserManagerService8001/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway9527/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway9527/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

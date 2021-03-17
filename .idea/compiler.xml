@@ -7,11 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="UserManagerService" />
-        <module name="gateway-9527" />
+        <module name="EnrollService8020" />
+        <module name="gateway9527" />
         <module name="InfoQueryService8010" />
-        <module name="UserManagerService-8002" />
+        <module name="UserManagerService8001" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="UserManagerService-8002" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
