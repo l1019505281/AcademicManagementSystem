@@ -18,14 +18,18 @@ spring:
             allowed-methods: "*"
             max-age: 3600
       routes:
-        - id: user-manager-service
-          uri: lb://user-service
+        - id: infoquery-service-lb
+          uri: lb://infoquery-service
           predicates:
-            - Path=/user/get/**
+            - Path=/infoquery/**
         - id: user-manager-lb
           uri: lb://user-service
           predicates:
-            - Path=/**
+            - Path=/usermanager/**
+        - id: enroll-service-lb
+          uri: lb://enroll-service
+          predicates:
+            - Path=/enroll/**
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848

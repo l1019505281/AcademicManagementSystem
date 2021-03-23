@@ -3,36 +3,25 @@ package com.lds.springcloud.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.interfaces.Claim;
 import com.lds.springcloud.entities.CommonResult;
-import com.lds.springcloud.entities.Student;
-import com.lds.springcloud.service.impl.StudentService;
+import com.lds.springcloud.entities.Teacher;
+import com.lds.springcloud.service.impl.TeacherService;
 import com.lds.springcloud.util.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
 @RestController
 @Slf4j
-public class StudentController {
+public class TeacherController {
 
     @Autowired
-    private StudentService studentService;
+    TeacherService teacherService;
 
-    @PutMapping(value = "/usermanager/student/{sno}")
-    public CommonResult login(Student student) {
-        
-        return new CommonResult(200, "success");
-    }
-
-    @DeleteMapping(value = "/usermanager/student/{id}")
-    public CommonResult delteStudent(@PathVariable("id") Integer id) {
-        studentService.deleteStudent(id);
-        return new CommonResult(200, "success");
-    }
-
-
-    @GetMapping(value = "/usermanager/student/getInfo")
+    @GetMapping(value = "/usermanager/teacher/getInfo")
     public CommonResult getStudent(@RequestHeader("Authorization") String token) {
         Integer id = null;
         String role = null;
@@ -50,10 +39,10 @@ public class StudentController {
         if (id==null) {
             return new CommonResult(404, "not found");
         }
-        Student student = studentService.getStudent(id);
-        if (student!=null) {
+        Teacher teacher = teacherService.getTeacherByUid(id);
+        if (teacher!=null) {
             json.put("role",role);
-            json.put("info",student);
+            json.put("info",teacher);
             return new CommonResult(200, "success", json);
         } else {
             return new CommonResult(404, "not found");

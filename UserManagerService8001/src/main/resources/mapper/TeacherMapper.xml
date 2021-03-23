@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lds.springcloud.dao.ITeacherDao">
+
+    <resultMap id="BaseResultMap" type="com.lds.springcloud.entities.Teacher">
+        <id column="tno" property="tno" jdbcType="INTEGER"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
+        <id column="name" property="name" jdbcType="VARCHAR"/>
+        <id column="sex" property="sex" jdbcType="VARCHAR"/>
+        <id column="extern" property="extern" jdbcType="VARCHAR"/>
+        <id column="major_name" property="majorName" jdbcType="VARCHAR"/>
+        <id column="title" property="title" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="create" parameterType="com.lds.springcloud.entities.Teacher" useGeneratedKeys="true" keyProperty="userId">
+        insert into t_user(tno, name, user_id, sex, extern, major_name, title)  values(#{tno}, #{name}, #{userId}, #{sex}, #{extern}, #{majorName}, #{title});
+    </insert>
+
+    <delete id="delelte" parameterType="int">
+        delete from t_teacher where user_id = #{id};
+    </delete>
+    <select id="getTeacherByUid" resultType="com.lds.springcloud.entities.Teacher">
+        select * from t_teacher where user_id = #{id};
+    </select>
+
+</mapper>

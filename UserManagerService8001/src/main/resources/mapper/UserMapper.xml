@@ -42,5 +42,11 @@
     <select id="totalOfUsers" resultType="java.lang.Integer">
         select count(*) from t_user
     </select>
+    <select id="getSnoByUid" resultType="java.lang.Integer">
+        select sno from t_student where user_id = #{uid}
+    </select>
+    <select id="getTnoByUid" resultType="java.lang.Integer">
+        select tno from t_teacher where user_id = #{uid}
+    </select>
     <!--SELECT * FROM t_user WHERE username LIKE '1%' OR user_id LIKE '1%' LIMIT 0,2-->
 </mapper>

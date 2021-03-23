@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lds.springcloud.dao.IScoreDao">
+
+
+    <resultMap id="BaseResultMap" type="com.lds.springcloud.entities.Score">
+        <id column="cno" property="cno" jdbcType="INTEGER"/>
+        <id column="class_name" property="className" jdbcType="VARCHAR"/>
+        <id column="sno" property="sno" jdbcType="INTEGER"/>
+        <id column="score" property="score" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="addScore" parameterType="com.lds.springcloud.entities.Score">
+        insert into t_score(cno, sno, score)  values(#{cno}, #{sno}, #{score});
+    </insert>
+
+
+    <select id="queryScoreByno" parameterType="int" resultMap="BaseResultMap">
+    SELECT s.cno,s.score,s.sno,c.class_name FROM t_score s LEFT JOIN t_course c ON s.cno = c.cno WHERE s.sno=#{sno} AND c.cno=#{cno};
+    </select>
+
+    <select id="queryScoreByQuery" resultMap="BaseResultMap">
+        SELECT s.cno,s.score,s.sno,c.class_name FROM t_score s LEFT JOIN t_course c ON s.cno = c.cno WHERE (s.cno LIKE #{query} OR c.class_name LIKE #{query}) AND s.sno=#{sno} LIMIT #{pageNum},#{pageSize}
+    </select>
+    <select id="getTotalOfScore" resultType="java.lang.Integer">
+        select count(*) from t_score
+    </select>
+</mapper>

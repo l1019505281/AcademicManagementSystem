@@ -61,4 +61,8 @@ public interface IUserService {
      * @return
      */
     public Integer editUser(User user);
+
+    Integer getSnoByUid(Integer uid);
+
+    Integer getTnoByUid(Integer uid);
 }

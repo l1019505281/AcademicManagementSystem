@@ -69,4 +69,14 @@ public class UserService implements IUserService {
     public Integer editUser(User user) {
         return userDAO.editUser(user);
     }
+
+    @Override
+    public Integer getSnoByUid(Integer uid) {
+        return userDAO.getSnoByUid(uid);
+    }
+
+    @Override
+    public Integer getTnoByUid(Integer uid) {
+        return userDAO.getTnoByUid(uid);
+    }
 }

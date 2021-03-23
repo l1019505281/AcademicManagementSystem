@@ -71,8 +71,10 @@ public class Menus implements Serializable {
         List<Menus> subItems2 = new ArrayList<Menus>();
         Menus searchTeaching = new Menus(111, "查询授课", "searchTeaching", null, null);
         Menus publishCourses = new Menus(112, "发布课程", "publishCourses", null, null);
+        Menus giveScore = new Menus(113, "评定成绩", "giveScore", null, null);
         subItems2.add(searchTeaching);
         subItems2.add(publishCourses);
+        subItems2.add(giveScore);
 //      一级菜单
         Menus items1 = new Menus(125, "我的资料", "users", subItems1, 1);
         Menus items2 = new Menus(126, "授课任务", "course", subItems2, 2);

@@ -2,11 +2,9 @@ package com.lds.springcloud.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.interfaces.Claim;
-import com.lds.springcloud.entities.CommonResult;
-import com.lds.springcloud.entities.Menus;
-import com.lds.springcloud.entities.Student;
-import com.lds.springcloud.entities.User;
+import com.lds.springcloud.entities.*;
 import com.lds.springcloud.service.impl.StudentService;
+import com.lds.springcloud.service.impl.TeacherService;
 import com.lds.springcloud.service.impl.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +25,24 @@ public class UserController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private TeacherService teacherService;
+
     @Value("${config.info}")
     private String configInfo;
 
     @Value("${server.port}")
     private String serverPort;
 
-    @PostMapping(value = "/users")
+    @PostMapping(value = "/usermanager/users")
     public CommonResult createUser(User user) {
 
         //改为事务
         int result = userService.create(user);
         if ("student".equals(user.getRole())) {
             int result2 = studentService.create(new Student(user.getUserId()));
+        } else if ("teacher".equals(user.getRole())) {
+            int result3 = teacherService.create(new Teacher(user.getUserId()));
         }
         log.info("账号创建结果：" + result);
         if (result > 0) {
@@ -49,7 +52,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/usermanager/login")
     public CommonResult login(User user) {
         log.info(user.toString());
         User user1 = userService.login(user);
@@ -72,7 +75,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/users/{id}")
+    @GetMapping(value = "/usermanager/users/{id}")
     public CommonResult queryUser(@PathVariable("id") Integer id) {
         User user = userService.queryById(id);
         log.info("账号查询结果：" + user);
@@ -94,14 +97,18 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/menus")
+    @GetMapping(value = "/usermanager/menus")
     public CommonResult getUserMenus(@RequestHeader("Authorization") String token) {
         String role = null;
+        Integer uid = null;
         List<Menus> menusList = null;
+        Integer no = null;
         try {
             Map<String, Claim> map = JWTUtil.verifyToken(token);
             Claim roleClaim = map.get("role");
+            Claim uidClaim = map.get("userId");
             role = roleClaim.asString();
+            uid = Integer.parseInt(uidClaim.asString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,13 +116,18 @@ public class UserController {
             menusList = Menus.getAdminMenuList();
         } else if ("student".equals(role)) {
             menusList = Menus.getStudentMenuList();
+            no = userService.getSnoByUid(uid);
         } else if ("teacher".equals(role)) {
             menusList = Menus.getTeacherMenuList();
+            no = userService.getTnoByUid(uid);
         }
-        return new CommonResult(200, "success", menusList);
+        JSONObject json = new JSONObject();
+        json.put("no", no);
+        json.put("menusList", menusList);
+        return new CommonResult(200, "success", json);
     }
 
-    @RequestMapping(value = "/users")
+    @RequestMapping(value = "/usermanager/users")
     public CommonResult getUserList(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize, @RequestParam("query") String query) {
         List<User> users = userService.queryUserByQuery(pageNum, pageSize, query);
         int total = userService.getTotalOfUser();
@@ -126,27 +138,41 @@ public class UserController {
         return new CommonResult(200, "success", json);
     }
 
-    @DeleteMapping(value = "/users/{id}")
-    public CommonResult delteUser(@PathVariable("id") Integer id) {
+    @DeleteMapping(value = "/usermanager/users/{id}")
+    public CommonResult delteUser(@PathVariable("id") Integer id,@RequestHeader("Authorization") String token) {
         userService.deleteUser(id);
-        studentService.deleteStudent(id);
+        String role = null;
+        try {
+            Map<String, Claim> map = JWTUtil.verifyToken(token);
+            Claim roleClaim = map.get("role");
+            role = roleClaim.asString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ("student".equals(role)) {
+            studentService.deleteStudent(id);
+        } else if ("teacher".equals(role)) {
+            teacherService.deleteTeacher(id);
+        }
         return new CommonResult(200, "success");
     }
 
-    @PutMapping(value = "/users/{id}")
+    @PutMapping(value = "/usermanager/users/{id}")
     public CommonResult editUser(@PathVariable("id") Integer id, User user) {
         user.setUserId(id);
         userService.editUser(user);
+
         return new CommonResult(200, "success");
     }
 
-    @RequestMapping(value = "/config/info")
+
+    @RequestMapping(value = "/usermanager/config/info")
     public CommonResult getConfigInfo() {
 
         return new CommonResult(200, configInfo);
     }
 
-    @RequestMapping(value = "/lb")
+    @RequestMapping(value = "/usermanager/lb")
     public CommonResult getInfo() {
 
         return new CommonResult(200, serverPort);

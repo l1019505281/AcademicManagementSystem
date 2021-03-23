@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lds.springcloud.dao.ICourseDao">
+
+
+    <resultMap id="BaseResultMap" type="com.lds.springcloud.entities.Course">
+        <id column="cno" property="cno" jdbcType="INTEGER"/>
+        <id column="class_name" property="className" jdbcType="VARCHAR"/>
+        <id column="class_room" property="classRoom" jdbcType="VARCHAR"/>
+        <id column="class_major" property="classMajor" jdbcType="VARCHAR"/>
+        <id column="time_enroll" property="timeEnroll" jdbcType="TIMESTAMP"/>
+        <id column="tno" property="tno" jdbcType="INTEGER"/>
+        <id column="number_people" property="numberPeople" jdbcType="INTEGER"/>
+        <id column="enroll_people" property="enrollPeople" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="addCourse" parameterType="com.lds.springcloud.entities.Course">
+        insert into t_course(class_name, class_room, class_major, time_enroll,tno, number_people, enroll_people)  values(#{className}, #{classRoom}, #{classMajor}, #{timeEnroll}, #{tno}, #{numberPeople}, #{enrollPeople});
+    </insert>
+
+    <select id="queryCourse" parameterType="int" resultMap="BaseResultMap">
+        SELECT c.cno,c.class_name,c.class_room,c.class_major,c.time_enroll,c.tno FROM t_enroll e RIGHT JOIN t_course c ON e.cno = c.cno WHERE e.sno=#{sno};
+    </select>
+    <select id="queryCourseByQuery" resultMap="BaseResultMap">
+        SELECT c.cno,c.class_name,c.class_room,c.class_major,c.time_enroll,c.tno FROM t_enroll e RIGHT JOIN t_course c ON e.cno = c.cno WHERE (c.class_name LIKE #{query} OR c.cno LIKE #{query}) AND e.sno=#{sno} LIMIT #{pageNum},#{pageSize}
+    </select>
+    <select id="getTotalOfCourse" resultType="java.lang.Integer">
+        select count(*) from t_course
+    </select>
+    <select id="getMyTeaching" resultMap="BaseResultMap">
+        select * from t_course where tno = #{tno}
+    </select>
+    <select id="getTimeEnroll" resultType="java.util.Date">
+        select time_enroll from t_course where cno=#{cno}
+    </select>
+
+</mapper>

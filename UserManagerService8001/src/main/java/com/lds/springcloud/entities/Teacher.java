@@ -7,17 +7,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student {
-    private Integer sno;
+public class Teacher {
+
+    private Integer tno;
     private String name;
-    private String className;
-    private Integer userId;
-    private String majorName;
-    private String sex;
     private String extern;
+    private String sex;
+    private String majorName;
+    private String title;
+    private Integer userId;
 
-
-    public Student(Integer userId) {
+    public Teacher(Integer userId) {
         this.userId = userId;
     }
 }

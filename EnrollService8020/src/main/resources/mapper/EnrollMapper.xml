@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lds.springcloud.dao.IEnrollDao">
+
+
+    <resultMap id="BaseResultMap" type="com.lds.springcloud.entities.Enroll">
+        <id column="cno" property="cno" jdbcType="INTEGER"/>
+        <id column="sno" property="sno" jdbcType="INTEGER"/>
+        <id column="class_name" property="className" jdbcType="VARCHAR"/>
+        <id column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="EnrollCourseMap" type="com.lds.springcloud.entities.Course">
+        <id column="cno" property="cno" jdbcType="INTEGER"/>
+        <id column="class_name" property="className" jdbcType="VARCHAR"/>
+        <id column="class_room" property="classRoom" jdbcType="VARCHAR"/>
+        <id column="time_enroll" property="timeEnroll" jdbcType="TIMESTAMP"/>
+        <id column="number_people" property="numberPeople" jdbcType="INTEGER"/>
+        <id column="enroll_people" property="enrollPeople" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="addEnroll" useGeneratedKeys="true">
+        insert into t_enroll(cno, sno)  values(#{cno}, #{sno});
+    </insert>
+    <select id="queryCourses" resultMap="EnrollCourseMap">
+        SELECT cno,class_name,class_room,time_enroll,number_people,enroll_people FROM t_course WHERE cno NOT IN (SELECT cno FROM t_enroll WHERE sno = #{sno}) LIMIT #{pageNum},#{pageSize}
+    </select>
+<!--    SELECT c.cno,c.class_name,c.class_room FROM t_course c LEFT JOIN t_enroll e ON c.cno &lt;&gt; e.cno WHERE e.sno = #{sno} AND (c.class_name LIKE #{query} OR c.cno LIKE #{query}) LIMIT #{pageNum},#{pageSize}-->
+<!--    AND (class_name LIKE #{query} OR cno LIKE #{query})  -->
+    <select id="getTotalOfScore" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_course c WHERE cno NOT IN (SELECT cno FROM t_enroll WHERE sno = #{sno} )
+    </select>
+
+<!--    SELECT count(*) FROM t_course c LEFT JOIN t_enroll e ON c.cno &lt;&gt; e.cno WHERE e.sno = #{sno}-->
+</mapper>

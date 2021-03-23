@@ -33,7 +33,7 @@ public interface IUserDAO {
 
     /**
      * 删除用户
-     * @param user
+     * @param id
      * @return
      */
     public int deleteUser(@Param("id") Integer id);
@@ -65,4 +65,9 @@ public interface IUserDAO {
      * @return
      */
     public Integer editUser(User user);
+
+
+    Integer getSnoByUid(@Param("uid") int uid);
+
+    Integer getTnoByUid(@Param("uid") int uid);
 }
